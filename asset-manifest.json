@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/fourthrealminnovations.com/static/css/main.f855e6bc.css",
+    "main.js": "/fourthrealminnovations.com/static/js/main.8cd623ca.js",
+    "static/js/787.4d8d0ede.chunk.js": "/fourthrealminnovations.com/static/js/787.4d8d0ede.chunk.js",
+    "index.html": "/fourthrealminnovations.com/index.html",
+    "main.f855e6bc.css.map": "/fourthrealminnovations.com/static/css/main.f855e6bc.css.map",
+    "main.8cd623ca.js.map": "/fourthrealminnovations.com/static/js/main.8cd623ca.js.map",
+    "787.4d8d0ede.chunk.js.map": "/fourthrealminnovations.com/static/js/787.4d8d0ede.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.8cd623ca.js"
+  ]
+}
