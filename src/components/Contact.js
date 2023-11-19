@@ -1,9 +1,10 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import ApplicationContext from "../Context";
 
 const Contact = (props) => {
   const { sharedData, setSharedData } = useContext(ApplicationContext);
+  const [isAlertHidden, setAlertHidden] = useState(true);
 
   useEffect(() => {
     !sharedData.messageDetails &&
@@ -51,13 +52,16 @@ const Contact = (props) => {
   };
 
   const handleSend = async () => {
-    await fetch(
+    const response = await fetch(
       "https://s47hgo1zcb.execute-api.us-east-1.amazonaws.com/contact",
       {
         method: "POST",
         body: JSON.stringify(sharedData.messageDetails),
       }
     );
+    if (response.ok) {
+      setAlertHidden(false);
+    }
   };
 
   return (
@@ -69,8 +73,13 @@ const Contact = (props) => {
         <Typography variant="body1" sx={{ mb: 2 }}></Typography>
       </Box>
       <Box sx={{ my: 4 }}>
+        {!isAlertHidden && (
+          <Alert severity="success">Message sent successfully!</Alert>
+        )}
+      </Box>
+      <Box sx={{ my: 4 }}>
         <Grid container spacing={2}>
-          <Grid item lg={6}>
+          <Grid item xs={12} lg={6}>
             <TextField
               label="Name"
               type="text"
@@ -79,7 +88,7 @@ const Contact = (props) => {
               fullWidth
             />
           </Grid>
-          <Grid item lg={6}>
+          <Grid item xs={12} lg={6}>
             <TextField
               label="Email"
               type="email"
@@ -88,7 +97,7 @@ const Contact = (props) => {
               fullWidth
             />
           </Grid>
-          <Grid item lg={12}>
+          <Grid item xs={12} lg={12}>
             <TextField
               label="Subject"
               type="text"
@@ -97,7 +106,7 @@ const Contact = (props) => {
               fullWidth
             />
           </Grid>
-          <Grid item lg={12}>
+          <Grid item xs={12} lg={12}>
             <TextField
               label="Body"
               type="text"
@@ -108,8 +117,8 @@ const Contact = (props) => {
               fullWidth
             />
           </Grid>
-          <Grid item lg={12} display={"flex"} justifyContent={"flex-end"}>
-            <Button onClick={handleSend}>Send</Button>
+          <Grid item xs={12} display={"flex"} justifyContent={"flex-end"}>
+            <Button onClick={() => /*handleSend*/ {}}>Send</Button>
           </Grid>
         </Grid>
       </Box>
