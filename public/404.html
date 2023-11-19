@@ -10,15 +10,13 @@
     />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Fourth Realm Innovations</title>
+    <script>
+      sessionStorage.redirect = location.href.split('/').pop();
+      location.replace(location.origin);
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <script>
-      if (sessionStorage.redirect) {
-        delete sessionStorage.redirect;
-        window.history.replaceState(null, null, sessionStorage.redirect);
-      }
-    </script>
     <div id="root"></div>
   </body>
 </html>
