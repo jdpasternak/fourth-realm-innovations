@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import ApplicationContext from "./Context";
 import HomePage from "./components/HomePage.js";
-import ScheduleService from "./components/ScheduleService.js";
 
 const ApplicationContextProvider = ({ children }) => {
   const [sharedData, setSharedData] = useState({});
-  // const [currentPage, setCurrentPage] = useState(<HomePage />);
-  const [currentPage, setCurrentPage] = useState(<ScheduleService />);
+  const [currentPage, setCurrentPage] = useState(<HomePage />);
   const [isContactPageAlertHidden, setContactPageAlertHidden] = useState(true);
   const [isContactPageLoading, setContactPageLoading] = useState(false);
   const [isMessageSent, setMessageSent] = useState(false);
