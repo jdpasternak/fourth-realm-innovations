@@ -1,44 +1,69 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { data } from "../static.js";
+import ApplicationContext from "../Context.js";
+
+const useHomePageData = () => {
+  const [homePageData, setHomePageData] = useState(null);
+
+  useEffect(() => {
+    const fetchedData = data.pages.find((x) => x.name === "Home Page");
+    setHomePageData(fetchedData);
+  }, []);
+
+  return homePageData;
+};
+
+const HomePageSection = React.memo(({ section }) => {
+  const { setCurrentPage } = useContext(ApplicationContext);
+  return (
+    <Box sx={{ my: 4 }}>
+      <Typography variant="h5" sx={{ mb: 2 }}>
+        {section.title}
+      </Typography>
+      <Typography variant="body1" sx={{ mb: 2 }}>
+        {section.content}
+      </Typography>
+      {section.button && (
+        <Button
+          variant={section.button.variant}
+          color="primary"
+          onClick={() => setCurrentPage(section.button.linkComponent)}
+        >
+          {section.button.text}
+        </Button>
+      )}
+    </Box>
+  );
+});
 
 const HomePage = () => {
-  const homePageData = data.pages.find((x) => x.name === "Home Page");
-  useEffect(() => {
-    console.log(homePageData);
-  }, []);
+  const homePageData = useHomePageData();
+
+  if (!homePageData) {
+    return;
+  }
 
   return (
     <>
-      <Box>
-        <Box sx={{ my: 4 }}>
-          <Typography variant="h4" gutterBottom>
-            {homePageData.heading}
-          </Typography>
-        </Box>
+      {!homePageData ? (
+        <Typography variant={"h5"}>Loading...</Typography>
+      ) : (
+        <Box>
+          <Box sx={{ my: 4 }}>
+            <Typography variant="h4" gutterBottom>
+              {homePageData.heading}
+            </Typography>
+          </Box>
 
-        {homePageData.sections.map((section, i) => {
-          return (
-            <Box sx={{ my: 4 }} key={i}>
-              <Typography variant="h5" sx={{ mb: 2 }}>
-                {section.title}
-              </Typography>
-              <Typography variant="body1" sx={{ mb: 2 }}>
-                {section.content}
-              </Typography>
-              {section.button && (
-                <Button
-                  variant={section.button.variant}
-                  color="primary"
-                  href={section.button.href}
-                >
-                  {section.button.text}
-                </Button>
-              )}
-            </Box>
-          );
-        })}
-      </Box>
+          {homePageData.sections.map((section) => (
+            <HomePageSection
+              key={section.id || section.title}
+              section={section}
+            />
+          ))}
+        </Box>
+      )}
     </>
   );
 };

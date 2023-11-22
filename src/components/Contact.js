@@ -3,8 +3,20 @@ import { useContext, useEffect, useState } from "react";
 import ApplicationContext from "../Context";
 
 const Contact = (props) => {
-  const { sharedData, setSharedData } = useContext(ApplicationContext);
-  const [isAlertHidden, setAlertHidden] = useState(true);
+  const {
+    sharedData,
+    setSharedData,
+    contactPageData: {
+      isContactPageAlertHidden,
+      setContactPageAlertHidden,
+      isContactPageLoading,
+      setContactPageLoading,
+      isMessageSent,
+      setMessageSent,
+      isContactFormHidden,
+      setContactFormHidden,
+    },
+  } = useContext(ApplicationContext);
 
   useEffect(() => {
     !sharedData.messageDetails &&
@@ -19,49 +31,55 @@ const Contact = (props) => {
       });
   }, []);
 
-  const handleChange = (val, field) => {
-    console.log("val", val, "\nfield", field);
-    switch (field) {
-      case "name":
-        setSharedData({
-          ...sharedData,
-          messageDetails: { ...sharedData.messageDetails, name: val },
-        });
-        break;
-      case "email":
-        setSharedData({
-          ...sharedData,
-          messageDetails: { ...sharedData.messageDetails, email: val },
-        });
-        break;
-      case "subject":
-        setSharedData({
-          ...sharedData,
-          messageDetails: { ...sharedData.messageDetails, subject: val },
-        });
-        break;
-      case "body":
-        setSharedData({
-          ...sharedData,
-          messageDetails: { ...sharedData.messageDetails, body: val },
-        });
-        break;
-      default:
-        break;
-    }
+  const handleChange = (event, field) => {
+    setSharedData({
+      ...sharedData,
+      messageDetails: {
+        ...sharedData.messageDetails,
+        [field]: event.target.value,
+      },
+    });
   };
 
-  const handleSend = async () => {
-    const response = await fetch(
-      "https://s47hgo1zcb.execute-api.us-east-1.amazonaws.com/contact",
-      {
-        method: "POST",
-        body: JSON.stringify(sharedData.messageDetails),
+  const handleSend = async (event) => {
+    event.preventDefault();
+    setContactPageLoading(true); // Start loading
+    try {
+      const response = await fetch(
+        "https://s47hgo1zcb.execute-api.us-east-1.amazonaws.com/contact",
+        {
+          method: "POST",
+          body: JSON.stringify(sharedData.messageDetails),
+        }
+      );
+      console.log(response);
+      if (response.ok) {
+        setContactPageAlertHidden(false);
+        setMessageSent(true);
+        setInterval(() => setContactFormHidden(true), 7000);
+        localStorage.setItem("hasMessageBeenSent", true);
+        localStorage.setItem("messageSentDate", Date.now());
+      } else {
+        console.log(response);
       }
-    );
-    if (response.ok) {
-      setAlertHidden(false);
+    } catch (error) {
+      console.error(error);
     }
+    setContactPageLoading(false); // End loading
+    setInterval(() => {
+      setContactPageAlertHidden(true);
+    }, 5000);
+  };
+
+  const validateMessageDetails = (messageDetails) => {
+    if (
+      messageDetails.name === null ||
+      messageDetails.email === null ||
+      messageDetails.body === null
+    ) {
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -72,56 +90,76 @@ const Contact = (props) => {
         </Typography>
         <Typography variant="body1" sx={{ mb: 2 }}></Typography>
       </Box>
-      <Box sx={{ my: 4 }}>
-        {!isAlertHidden && (
-          <Alert severity="success">Message sent successfully!</Alert>
-        )}
-      </Box>
-      <Box sx={{ my: 4 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} lg={6}>
-            <TextField
-              label="Name"
-              type="text"
-              value={sharedData?.messageDetails?.name}
-              onChange={(event) => handleChange(event.target.value, "name")}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <TextField
-              label="Email"
-              type="email"
-              value={sharedData?.messageDetails?.email}
-              onChange={(event) => handleChange(event.target.value, "email")}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} lg={12}>
-            <TextField
-              label="Subject"
-              type="text"
-              value={sharedData?.messageDetails?.subject}
-              onChange={(event) => handleChange(event.target.value, "subject")}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} lg={12}>
-            <TextField
-              label="Body"
-              type="text"
-              value={sharedData?.messageDetails?.body}
-              onChange={(event) => handleChange(event.target.value, "body")}
-              multiline
-              rows={4}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} display={"flex"} justifyContent={"flex-end"}>
-            <Button onClick={() => /*handleSend*/ {}}>Send</Button>
-          </Grid>
-        </Grid>
-      </Box>
+      <Box sx={{ my: 4 }}></Box>
+      {!isContactFormHidden ? (
+        <form onSubmit={handleSend}>
+          <Box sx={{ my: 4 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} lg={6}>
+                <TextField
+                  label="Name"
+                  type="text"
+                  value={sharedData?.messageDetails?.name}
+                  onChange={(event) => handleChange(event, "name")}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <TextField
+                  label="Email"
+                  type="email"
+                  value={sharedData?.messageDetails?.email}
+                  onChange={(event) => handleChange(event, "email")}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} lg={12}>
+                <TextField
+                  label="Subject"
+                  type="text"
+                  value={sharedData?.messageDetails?.subject}
+                  onChange={(event) => handleChange(event, "subject")}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} lg={12}>
+                <TextField
+                  label="Body"
+                  type="text"
+                  value={sharedData?.messageDetails?.body}
+                  onChange={(event) => handleChange(event, "body")}
+                  multiline
+                  rows={4}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} display={"flex"} justifyContent={"flex-end"}>
+                {!isContactPageAlertHidden && (
+                  <Alert severity="success">Message sent successfully!</Alert>
+                )}
+                &nbsp;
+                <Button
+                  type={"submit"}
+                  disabled={isContactPageLoading || isMessageSent}
+                >
+                  {isContactPageLoading
+                    ? "Sending..."
+                    : isMessageSent
+                    ? "Sent!"
+                    : "Send"}
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </form>
+      ) : (
+        <Typography variant="h5">
+          Thank you for sending us a message!
+        </Typography>
+      )}
     </>
   );
 };
