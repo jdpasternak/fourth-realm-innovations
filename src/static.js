@@ -1,17 +1,19 @@
 import { Computer } from "@mui/icons-material";
+import Services from "./components/Services";
+import ScheduleService from "./components/ScheduleService";
+import Contact from "./components/Contact";
 
 export const data = {
   pages: [
     {
-      name: "My Services",
-      title: "My Services",
+      name: "Services",
+      title: "Services",
       introduction:
         "At Fourth Realm Innovations, we provide a wide array of technical services tailored to meet the needs of individuals, small businesses, and educational institutions. Our offerings harness the power of the latest technologies, backed by industry-standard certifications and years of hands-on experience.",
       list: [
         {
           name: "Technical Support & Repair",
           iconName: "Computer",
-          icon: <Computer />,
           bullets: [
             "Comprehensive computer and device repair services",
             "Regular maintenance, tune-ups, and hardware upgrades",
@@ -20,6 +22,7 @@ export const data = {
         },
         {
           name: "Network Solutions",
+          iconName: "Wifi",
           bullets: [
             "Home and small office network setup and maintenance",
             "Wireless network optimization for coverage and speed",
@@ -28,6 +31,7 @@ export const data = {
         },
         {
           name: "Cybersecurity Services",
+          iconName: "Shield",
           bullets: [
             "Personalized cybersecurity assessments to identify potential vulnerabilities",
             "Implementation of security measures, including firewalls and antivirus solutions",
@@ -36,6 +40,7 @@ export const data = {
         },
         {
           name: "Cloud Computing Services",
+          iconName: "Cloud",
           bullets: [
             "AWS cloud-based application development and deployment",
             "Cloud environment optimization for performance and cost",
@@ -44,6 +49,7 @@ export const data = {
         },
         {
           name: "Web Development",
+          iconName: "Web",
           bullets: [
             "Full-stack web development, from initial design to launch",
             "Revamping existing websites for improved user experience and SEO",
@@ -52,6 +58,7 @@ export const data = {
         },
         {
           name: "IT Project Management",
+          iconName: "Timeline",
           bullets: [
             "Coordinating technology projects to ensure timely and cost-effective delivery",
             "Strategic planning and execution from inception to completion",
@@ -60,6 +67,7 @@ export const data = {
         },
         {
           name: "Training & Education",
+          iconName: "School",
           bullets: [
             "Customized IT training sessions for individuals or teams",
             "Workshops on cybersecurity awareness and best practices",
@@ -68,6 +76,7 @@ export const data = {
         },
         {
           name: "Consultancy Services",
+          iconName: "Person",
           bullets: [
             "One-on-one IT consultations to align technology with business objectives",
             "Long-term tech strategy development for growth and innovation",
@@ -81,7 +90,7 @@ export const data = {
         "Contact us today to discuss how we can empower your tech journey.",
     },
     {
-      name: "Schedule a Service",
+      name: "ScheduleService",
       title: "Schedule a Service",
       introduction:
         "Select a service category below, then specify your needs by choosing from the provided options.",
@@ -369,6 +378,7 @@ export const data = {
             text: "Explore Our Services",
             href: "/services",
             variant: "contained",
+            linkComponent: () => <Services />,
           },
         },
 
@@ -395,6 +405,7 @@ export const data = {
             text: "Schedule a Service",
             href: "/schedule-service",
             variant: "outlined",
+            linkComponent: () => <ScheduleService />,
           },
         },
 
@@ -414,6 +425,7 @@ export const data = {
             text: "Contact Us",
             href: "/contact",
             variant: "outlined",
+            linkComponent: () => <Contact />,
           },
         },
       ],
