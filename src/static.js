@@ -378,7 +378,7 @@ export const data = {
             text: "Explore Our Services",
             href: "/services",
             variant: "contained",
-            linkComponent: () => <Services />,
+            linkComponent: <Services />,
           },
         },
 
@@ -405,7 +405,7 @@ export const data = {
             text: "Schedule a Service",
             href: "/schedule-service",
             variant: "outlined",
-            linkComponent: () => <ScheduleService />,
+            linkComponent: <ScheduleService />,
           },
         },
 
@@ -425,7 +425,7 @@ export const data = {
             text: "Contact Us",
             href: "/contact",
             variant: "outlined",
-            linkComponent: () => <Contact />,
+            linkComponent: <Contact />,
           },
         },
       ],

@@ -15,6 +15,11 @@ const useHomePageData = () => {
 };
 
 const HomePageSection = React.memo(({ section }) => {
+  const handleSetCurrentPage = (component) => {
+    window.scrollTo(0, 0);
+    setCurrentPage(() => component);
+  };
+
   const { setCurrentPage } = useContext(ApplicationContext);
   return (
     <Box sx={{ my: 4 }}>
@@ -28,7 +33,7 @@ const HomePageSection = React.memo(({ section }) => {
         <Button
           variant={section.button.variant}
           color="primary"
-          onClick={() => setCurrentPage(section.button.linkComponent)}
+          onClick={() => handleSetCurrentPage(section.button.linkComponent)}
         >
           {section.button.text}
         </Button>
