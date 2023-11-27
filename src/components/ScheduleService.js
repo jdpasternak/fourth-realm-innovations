@@ -158,6 +158,30 @@ const ScheduleService = (props) => {
     }, 3000);
   };
 
+  const SectionTitle = (props) => {
+    return (
+      <Grid item xs={12}>
+        <Typography variant={"h5"}>{props.childre}</Typography>
+      </Grid>
+    );
+  };
+
+  const FormField = (props) => {
+    return (
+      <Grid item xs={12} lg={4}>
+        <TextField
+          label={props.label}
+          type={props.type}
+          name={props.name}
+          value={sharedData?.scheduleServiceDetails[`${props.name}`] || ""}
+          onChange={({ target: { value } }) => handleChange(value, props.name)}
+          fullWidth
+          required
+        />
+      </Grid>
+    );
+  };
+
   return (
     <>
       <Box sx={{ my: 4 }}>
@@ -169,22 +193,8 @@ const ScheduleService = (props) => {
       <Box sx={{ my: 4 }}>
         <form>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant={"h5"}>Basic Information</Typography>
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <TextField
-                label="Name"
-                type="text"
-                name="name"
-                value={sharedData?.scheduleServiceDetails?.name}
-                onChange={({ target: { value } }) =>
-                  handleChange(value, "name")
-                }
-                fullWidth
-                required
-              />
-            </Grid>
+            <SectionTitle>Basic Information</SectionTitle>
+            <FormField label="Name" name="name" type="text" />
             <Grid item xs={12} lg={4}>
               <TextField
                 label="Email"
