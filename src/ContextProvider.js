@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ApplicationContext from "./Context";
 
 const ApplicationContextProvider = ({ children }) => {
@@ -9,6 +9,11 @@ const ApplicationContextProvider = ({ children }) => {
   const [isContactFormHidden, setContactFormHidden] = useState(false);
   const [loggedInEmail, setLoggedInEmail] = useState();
   const [isLoggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setLoggedIn(localStorage.getItem("token") != null);
+    setLoggedInEmail(localStorage.getItem("loggedInEmail"));
+  }, []);
 
   const contextValue = {
     isLoggedIn,
