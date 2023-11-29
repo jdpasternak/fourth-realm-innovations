@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { data } from "../static.js";
 import ApplicationContext from "../Context.js";
+import { Link } from "react-router-dom";
 
 const useHomePageData = () => {
   const [homePageData, setHomePageData] = useState(null);
@@ -33,7 +34,9 @@ const HomePageSection = React.memo(({ section }) => {
         <Button
           variant={section.button.variant}
           color="primary"
-          onClick={() => handleSetCurrentPage(section.button.linkComponent)}
+          disabled={section.button.disabled}
+          component={Link}
+          to={section.button.to}
         >
           {section.button.text}
         </Button>
