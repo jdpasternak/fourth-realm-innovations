@@ -1,27 +1,50 @@
 import { Button, ButtonGroup, Paper } from "@mui/material";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import ApplicationContext from "../Context";
-import HomePage from "./HomePage";
-import Services from "./Services";
-import Contact from "./Contact";
-import ScheduleService from "./ScheduleService";
 
 const Nav = () => {
-  const { setCurrentPage } = useContext(ApplicationContext);
+  const { isLoggedIn, setLoggedIn, setLoggedInEmail } =
+    useContext(ApplicationContext);
+
+  const handleLogout = () => {
+    console.log(isLoggedIn);
+    console.log("logging out...");
+    setLoggedIn(false);
+    setLoggedInEmail("");
+    localStorage.removeItem("token", "");
+  };
 
   return (
-    <Paper component={"nav"} sx={{ p: 2 }}>
+    <Paper
+      component={"nav"}
+      sx={{ p: 2, display: "flex", justifyContent: "space-between" }}
+    >
       <ButtonGroup variant="text" aria-label="button group">
-        <Button onClick={() => setCurrentPage(() => <HomePage />)}>Home</Button>
-        <Button onClick={() => setCurrentPage(() => <Services />)}>
+        <Button component={Link} to={"/"}>
+          Home
+        </Button>
+        <Button component={Link} to={"/services"}>
           Services
         </Button>
-        <Button onClick={() => setCurrentPage(() => <ScheduleService />)}>
+        {/* <Button component={Link} to={"/schedule-service"}>
           Schedule Service
-        </Button>
-        <Button onClick={() => setCurrentPage(() => <Contact />)}>
+        </Button> */}
+        <Button component={Link} to={"/contact"}>
           Contact
         </Button>
+        <Button component={Link} to={"/blog"}>
+          Blog
+        </Button>
+      </ButtonGroup>
+      <ButtonGroup>
+        {isLoggedIn ? (
+          <Button onClick={handleLogout}>Logout</Button>
+        ) : (
+          <Button component={Link} to="/login">
+            Login
+          </Button>
+        )}
       </ButtonGroup>
     </Paper>
   );
