@@ -1,15 +1,16 @@
-import { Button, Paper, Typography } from "@mui/material";
+import { Alert, Button, Paper, Typography } from "@mui/material";
 import FormTextField from "./FormTextField";
 import * as yup from "yup";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import LoginContext from "./LoginContext";
 import withLoginContext from "./withLoginContext";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ApplicationContext from "../../Context";
 const Grid = Grid2;
 
 const validationSchema = yup.object().shape({
-  loginUsername: yup
+  loginEmail: yup
     .string()
     .email("Invalid email address")
     .required("Email is required"),
@@ -20,7 +21,10 @@ const validationSchema = yup.object().shape({
 });
 
 const LoginForm = (props) => {
-  const { formData, setFormData, errors, setErrors } = useContext(LoginContext);
+  const navigate = useNavigate();
+  const { formData, setErrors, setServerError, serverError } =
+    useContext(LoginContext);
+  const { setLoggedInEmail, setLoggedIn } = useContext(ApplicationContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -37,7 +41,31 @@ const LoginForm = (props) => {
     }
   };
 
-  const submitForm = (formData) => {};
+  const submitForm = async (formData) => {
+    const { loginEmail: email, loginPassword: password } = formData;
+    const response = await fetch(
+      "https://s47hgo1zcb.execute-api.us-east-1.amazonaws.com/login",
+      {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      }
+    );
+    // console.log(response);
+    if (response.ok) {
+      const { token } = await response.json();
+      localStorage.setItem("token", token);
+      localStorage.setItem("loggedInEmail", email);
+      setLoggedIn(true);
+      setLoggedInEmail(email);
+      navigate("/");
+    } else {
+      //   console.error("Something went wrong");
+      const { message } = await response.json();
+      //   console.error(message);
+      setServerError(message);
+      window.scrollTo(0, 0);
+    }
+  };
 
   return (
     <Grid container>
@@ -46,15 +74,21 @@ const LoginForm = (props) => {
           <Typography variant="h2" sx={{ mb: 2 }}>
             Login
           </Typography>
+          {serverError && <Alert severity="error">{serverError}</Alert>}
           <form>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{ my: 2 }}>
               <Grid
                 item
                 xs={12}
                 lg={6}
                 sx={{ display: "flex", justifyContent: "center" }}
               >
-                <FormTextField label="Username" name="loginUsername" />
+                <FormTextField
+                  label="Email"
+                  name="loginEmail"
+                  required
+                  type="email"
+                />
               </Grid>
               <Grid
                 item
@@ -62,7 +96,12 @@ const LoginForm = (props) => {
                 lg={6}
                 sx={{ display: "flex", justifyContent: "center" }}
               >
-                <FormTextField label="Password" name="loginPassword" />
+                <FormTextField
+                  label="Password"
+                  name="loginPassword"
+                  required
+                  type="password"
+                />
               </Grid>
               <Grid item lg={6} xs={0}></Grid>
               <Grid
