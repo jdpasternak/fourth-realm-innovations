@@ -1,10 +1,10 @@
-import { Button, ButtonGroup, Paper } from "@mui/material";
+import { Box, Button, ButtonGroup, Paper, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import ApplicationContext from "../Context";
 
 const Nav = () => {
-  const { isLoggedIn, setLoggedIn, setLoggedInEmail } =
+  const { isLoggedIn, setLoggedIn, setLoggedInEmail, loggedInEmail } =
     useContext(ApplicationContext);
 
   const handleLogout = () => {
@@ -12,7 +12,8 @@ const Nav = () => {
     console.log("logging out...");
     setLoggedIn(false);
     setLoggedInEmail("");
-    localStorage.removeItem("token", "");
+    localStorage.removeItem("token");
+    localStorage.removeItem("loggedInEmail");
   };
 
   return (
@@ -37,15 +38,29 @@ const Nav = () => {
           Blog
         </Button>
       </ButtonGroup>
-      <ButtonGroup>
-        {isLoggedIn ? (
-          <Button onClick={handleLogout}>Logout</Button>
-        ) : (
-          <Button component={Link} to="/login">
-            Login
-          </Button>
+      <Box display="flex" alignItems={"center"}>
+        {isLoggedIn && loggedInEmail && (
+          <Typography sx={{ mr: 2, p: 0 }}>
+            Welcome, {loggedInEmail?.split("@")[0]}!
+          </Typography>
         )}
-      </ButtonGroup>
+        <ButtonGroup>
+          {isLoggedIn && (
+            <Button variant="text" component={Link} to="/account">
+              Account
+            </Button>
+          )}
+          {isLoggedIn ? (
+            <Button variant="text" onClick={handleLogout}>
+              Logout
+            </Button>
+          ) : (
+            <Button variant="text" component={Link} to="/login">
+              Login
+            </Button>
+          )}
+        </ButtonGroup>
+      </Box>
     </Paper>
   );
 };
