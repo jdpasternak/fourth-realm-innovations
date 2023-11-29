@@ -13,6 +13,7 @@ import BlogPost from "./components/BlogPost";
 import BlogList from "./components/BlogList";
 import LoginForm from "./components/login/LoginForm";
 import SignUpForm from "./components/login/SignUpForm";
+import Account from "./components/Account";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               <Route exact path="/blog/:slug" Component={BlogPost} />
               <Route exact path="/login" Component={LoginForm} />
               <Route exact path="/sign-up" Component={SignUpForm} />
+              <Route exact path="/account" Component={Account} />
             </Routes>
           </Container>
         </Box>
