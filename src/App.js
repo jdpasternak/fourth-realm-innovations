@@ -1,9 +1,9 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, IconButton } from "@mui/material";
 import "./App.css";
 import ApplicationContextProvider from "./ContextProvider";
 import Nav from "./components/Nav";
 import "./i18n";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import Services from "./components/Services";
 import ScheduleService from "./components/ScheduleService";
@@ -14,6 +14,8 @@ import BlogList from "./components/BlogList";
 import LoginForm from "./components/login/LoginForm";
 import SignUpForm from "./components/login/SignUpForm";
 import Account from "./components/Account";
+import { HelpOutlineOutlined } from "@mui/icons-material";
+import HelpPage from "./components/HelpPage";
 
 function App() {
   return (
@@ -37,8 +39,16 @@ function App() {
               <Route exact path="/login" Component={LoginForm} />
               <Route exact path="/sign-up" Component={SignUpForm} />
               <Route exact path="/account" Component={Account} />
+              <Route exact path="/help" Component={HelpPage} />
             </Routes>
           </Container>
+          <IconButton
+            LinkComponent={Link}
+            to="/help"
+            sx={{ position: "fixed", bottom: 0, right: 0, mr: 1, mb: 1 }}
+          >
+            <HelpOutlineOutlined />
+          </IconButton>
         </Box>
       </Router>
     </ApplicationContextProvider>
