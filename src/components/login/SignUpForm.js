@@ -1,7 +1,7 @@
 import { Alert, Button, Paper, Typography } from "@mui/material";
 import * as yup from "yup";
 import FormTextField from "./FormTextField";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import LoginContext from "./LoginContext";
 import withLoginContext from "./withLoginContext";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
@@ -25,13 +25,14 @@ const validationSchema = yup.object().shape({
 
 const SignUpForm = (props) => {
   const navigate = useNavigate();
+  const [isLoading, setLoading] = useState(false);
   const { formData, setErrors, serverError, setServerError } =
     useContext(LoginContext);
   const { setLoggedInEmail, setLoggedIn } = useContext(ApplicationContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event);
+    setLoading(true);
 
     try {
       await validationSchema.validate(formData, {
@@ -45,6 +46,7 @@ const SignUpForm = (props) => {
         validationErrors[error.path] = error.message;
       });
       setErrors(validationErrors);
+      setLoading(false);
     }
   };
 
@@ -128,7 +130,11 @@ const SignUpForm = (props) => {
                 display="flex"
                 justifyContent={"center"}
               >
-                <Button variant={"contained"} onClick={handleSubmit}>
+                <Button
+                  variant={"contained"}
+                  onClick={handleSubmit}
+                  disabled={isLoading}
+                >
                   Sign-Up
                 </Button>
               </Grid>
