@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import ApplicationContext from "./Context";
-import HomePage from "./components/HomePage.js";
-import Blogs from "./components/Blogs.js";
 
 const ApplicationContextProvider = ({ children }) => {
   const [sharedData, setSharedData] = useState({});
-  const [currentPage, setCurrentPage] = useState(<Blogs />);
   const [isContactPageAlertHidden, setContactPageAlertHidden] = useState(true);
   const [isContactPageLoading, setContactPageLoading] = useState(false);
   const [isMessageSent, setMessageSent] = useState(false);
@@ -20,8 +17,6 @@ const ApplicationContextProvider = ({ children }) => {
     setLoggedInEmail,
     sharedData,
     setSharedData,
-    currentPage,
-    setCurrentPage,
     contactPageData: {
       isContactPageAlertHidden,
       setContactPageAlertHidden,

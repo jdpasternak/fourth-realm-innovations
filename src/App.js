@@ -8,7 +8,7 @@ import HomePage from "./components/HomePage";
 import Services from "./components/Services";
 import ScheduleService from "./components/ScheduleService";
 import Contact from "./components/Contact";
-import useScrollToTop from "./useScrollToTop";git add
+import useScrollToTop from "./useScrollToTop";
 import BlogPost from "./components/BlogPost";
 import BlogList from "./components/BlogList";
 import LoginForm from "./components/login/LoginForm";
