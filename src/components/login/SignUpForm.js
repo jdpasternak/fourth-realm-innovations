@@ -64,7 +64,7 @@ const SignUpForm = (props) => {
     );
     // console.log(response);
     if (response.ok) {
-      const token = await response.json();
+      const { token } = await response.json();
       localStorage.setItem("token", token);
       setLoggedIn(true);
       setLoggedInEmail(email);
