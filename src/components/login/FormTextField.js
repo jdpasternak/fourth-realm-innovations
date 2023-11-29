@@ -23,7 +23,7 @@ const FormTextField = (props) => {
       value={formData[name] || ""}
       error={errors[name] != null}
       helperText={errors[name]}
-      required
+      {...props}
     />
   );
 };
