@@ -376,9 +376,9 @@ export const data = {
             "Our wide range of services means you get comprehensive solutions tailored to your specific needs. From technical support to network solutions, cybersecurity to cloud services, and web development - we cover all your tech bases. And with a personal touch! As the sole operator and service provider, I, [Your Name], take immense pride in the quality of my work and the relationships I build with my clients.",
           button: {
             text: "Explore Our Services",
-            href: "/services",
+            to: "/services",
             variant: "contained",
-            linkComponent: <Services />,
+            disabled: false,
           },
         },
 
@@ -403,9 +403,9 @@ export const data = {
             "Don't let technical glitches slow you down. Click on the \"Schedule a Service\" button and let's get your technology working for you, seamlessly and efficiently.",
           button: {
             text: "Schedule a Service",
-            href: "/schedule-service",
+            to: "/schedule-service",
             variant: "outlined",
-            linkComponent: <ScheduleService />,
+            disabled: true,
           },
         },
 
@@ -423,9 +423,9 @@ export const data = {
             "Have a question or need some advice? Feel free to reach out. We're here to help you navigate the tech world with ease and confidence.",
           button: {
             text: "Contact Us",
-            href: "/contact",
+            to: "/contact",
             variant: "outlined",
-            linkComponent: <Contact />,
+            disabled: false,
           },
         },
       ],
@@ -452,8 +452,9 @@ export const data = {
     },
     {
       title: "Blog/Insights",
-      name: "Blog/Insights",
+      name: "Blog",
       content: "",
+      blogs: {},
     },
     {
       title: "FAQs",
