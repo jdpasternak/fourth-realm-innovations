@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { marked } from "marked";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -28,7 +28,7 @@ const BlogPost = () => {
   const blogContent = useBlogContent(slug);
 
   return (
-    <div>
+    <Container>
       <h1>Blog Post</h1>
       <p>Now showing post: {slug}</p>
       {blogContent ? (
@@ -40,7 +40,7 @@ const BlogPost = () => {
       ) : (
         <Typography>Loading...</Typography>
       )}
-    </div>
+    </Container>
   );
 };
 

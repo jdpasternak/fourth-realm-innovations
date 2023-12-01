@@ -1,6 +1,6 @@
 import React from "react";
 import { data } from "../static.js";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Container, Grid, Paper, Typography } from "@mui/material";
 import * as Icons from "@mui/icons-material";
 
 const ServiceItem = React.memo(({ service }) => {
@@ -44,7 +44,7 @@ const Services = () => {
   }
 
   return (
-    <>
+    <Container>
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" sx={{ mb: 2 }}>
           {servicesData.title}
@@ -56,7 +56,7 @@ const Services = () => {
       {servicesData.list.map((service, i) => (
         <ServiceItem key={service.id || i} service={service} />
       ))}
-    </>
+    </Container>
   );
 };
 

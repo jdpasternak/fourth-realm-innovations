@@ -1,4 +1,12 @@
-import { Alert, Box, Button, Grid, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import ApplicationContext from "../Context";
 
@@ -83,7 +91,7 @@ const Contact = (props) => {
   };
 
   return (
-    <>
+    <Container maxWidth={"md"}>
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" sx={{ mb: 2 }}>
           Contact Us
@@ -160,7 +168,7 @@ const Contact = (props) => {
           Thank you for sending us a message!
         </Typography>
       )}
-    </>
+    </Container>
   );
 };
 

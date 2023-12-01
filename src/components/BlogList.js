@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -30,7 +30,7 @@ const BlogList = (props) => {
   const Items = useBlogList();
 
   return (
-    <div>
+    <Container>
       <h1>Blog List</h1>
       <ul>
         {Items.length > 0 ? (
@@ -43,7 +43,7 @@ const BlogList = (props) => {
           <Typography>Loading...</Typography>
         )}
       </ul>
-    </div>
+    </Container>
   );
 };
 

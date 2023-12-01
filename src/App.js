@@ -1,4 +1,4 @@
-import { Box, Container, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import "./App.css";
 import ApplicationContextProvider from "./ContextProvider";
 import Nav from "./components/Nav";
@@ -11,11 +11,11 @@ import Contact from "./components/Contact";
 import useScrollToTop from "./useScrollToTop";
 import BlogPost from "./components/BlogPost";
 import BlogList from "./components/BlogList";
-import LoginForm from "./components/login/LoginForm";
-import SignUpForm from "./components/login/SignUpForm";
 import Account from "./components/Account";
 import { HelpOutlineOutlined } from "@mui/icons-material";
 import HelpPage from "./components/HelpPage";
+import SignInSide from "./components/login/SignInSide";
+import SignUp from "./components/login/SignUp";
 
 function App() {
   return (
@@ -24,24 +24,20 @@ function App() {
         <ScrollToTop />
         <Box>
           <Nav />
-          <Container sx={{ my: 2 }}>
-            <Routes>
-              <Route exact path="/" Component={HomePage} />
-              <Route exact path="/services" Component={Services} />
-              <Route
-                exact
-                path="/schedule-service"
-                Component={ScheduleService}
-              />
-              <Route exact path="/contact" Component={Contact} />
-              <Route exact path="/blog" Component={BlogList} />
-              <Route exact path="/blog/:slug" Component={BlogPost} />
-              <Route exact path="/login" Component={LoginForm} />
-              <Route exact path="/sign-up" Component={SignUpForm} />
-              <Route exact path="/account" Component={Account} />
-              <Route exact path="/help" Component={HelpPage} />
-            </Routes>
-          </Container>
+          {/* <Container sx={{ my: 2 }}> */}
+          <Routes>
+            <Route exact path="/" Component={HomePage} />
+            <Route exact path="/services" Component={Services} />
+            <Route exact path="/schedule-service" Component={ScheduleService} />
+            <Route exact path="/contact" Component={Contact} />
+            <Route exact path="/blog" Component={BlogList} />
+            <Route exact path="/blog/:slug" Component={BlogPost} />
+            <Route exact path="/login" Component={SignInSide} />
+            <Route exact path="/sign-up" Component={SignUp} />
+            <Route exact path="/account" Component={Account} />
+            <Route exact path="/help" Component={HelpPage} />
+          </Routes>
+          {/* </Container> */}
           <IconButton
             LinkComponent={Link}
             to="/help"
