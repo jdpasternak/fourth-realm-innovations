@@ -1,8 +1,3 @@
-import { Computer } from "@mui/icons-material";
-import Services from "./components/Services";
-import ScheduleService from "./components/ScheduleService";
-import Contact from "./components/Contact";
-
 export const data = {
   pages: [
     {
