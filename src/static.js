@@ -368,7 +368,7 @@ export const data = {
           title: "Comprehensive Services Tailored for You",
 
           content:
-            "Our wide range of services means you get comprehensive solutions tailored to your specific needs. From technical support to network solutions, cybersecurity to cloud services, and web development - we cover all your tech bases. And with a personal touch! As the sole operator and service provider, I, [Your Name], take immense pride in the quality of my work and the relationships I build with my clients.",
+            "Our wide range of services means you get comprehensive solutions tailored to your specific needs. From technical support to network solutions, cybersecurity to cloud services, and web development - we cover all your tech bases. And with a personal touch! As the sole operator and service provider, I, Jake, take immense pride in the quality of my work and the relationships I build with my clients.",
           button: {
             text: "Explore Our Services",
             to: "/services",
@@ -395,12 +395,12 @@ export const data = {
           title: "Ready to Enhance Your Tech Experience?",
 
           content:
-            "Don't let technical glitches slow you down. Click on the \"Schedule a Service\" button and let's get your technology working for you, seamlessly and efficiently.",
+            "Don't let technical glitches slow you down. Click on the \"Request a Service\" button and let's get your technology working for you, seamlessly and efficiently.",
           button: {
-            text: "Schedule a Service",
-            to: "/schedule-service",
+            text: "Request a Service",
+            to: "/request-service",
             variant: "outlined",
-            disabled: true,
+            disabled: false,
           },
         },
 
