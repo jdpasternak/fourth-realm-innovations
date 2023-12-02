@@ -28,9 +28,9 @@ const Nav = () => {
         <Button component={Link} to={"/services"}>
           Services
         </Button>
-        {/* <Button component={Link} to={"/schedule-service"}>
-          Schedule Service
-        </Button> */}
+        <Button component={Link} to={"/request-service"}>
+          Request Service
+        </Button>
         <Button component={Link} to={"/contact"}>
           Contact
         </Button>
