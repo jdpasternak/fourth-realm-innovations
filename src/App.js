@@ -16,6 +16,7 @@ import { HelpOutlineOutlined } from "@mui/icons-material";
 import HelpPage from "./components/HelpPage";
 import SignInSide from "./components/login/SignInSide";
 import SignUp from "./components/login/SignUp";
+import RequestServicePage from "./components/RequestServicePage";
 
 function App() {
   return (
@@ -24,11 +25,15 @@ function App() {
         <ScrollToTop />
         <Box>
           <Nav />
-          {/* <Container sx={{ my: 2 }}> */}
           <Routes>
             <Route exact path="/" Component={HomePage} />
             <Route exact path="/services" Component={Services} />
             <Route exact path="/schedule-service" Component={ScheduleService} />
+            <Route
+              exact
+              path="/request-service"
+              Component={RequestServicePage}
+            />
             <Route exact path="/contact" Component={Contact} />
             <Route exact path="/blog" Component={BlogList} />
             <Route exact path="/blog/:slug" Component={BlogPost} />
@@ -37,7 +42,6 @@ function App() {
             <Route exact path="/account" Component={Account} />
             <Route exact path="/help" Component={HelpPage} />
           </Routes>
-          {/* </Container> */}
           <IconButton
             LinkComponent={Link}
             to="/help"
