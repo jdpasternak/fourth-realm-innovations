@@ -7,10 +7,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import ApplicationContext from "../Context";
 
-const Contact = (props) => {
+const ContactPage = (props) => {
   const {
     sharedData,
     setSharedData,
@@ -172,4 +172,4 @@ const Contact = (props) => {
   );
 };
 
-export default Contact;
+export default ContactPage;

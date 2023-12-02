@@ -5,9 +5,8 @@ import Nav from "./components/Nav";
 import "./i18n";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import Services from "./components/Services";
 import ScheduleService from "./components/ScheduleService";
-import Contact from "./components/Contact";
+import ContactPage from "./components/ContactPage";
 import useScrollToTop from "./useScrollToTop";
 import BlogPost from "./components/BlogPost";
 import BlogList from "./components/BlogList";
@@ -17,6 +16,7 @@ import HelpPage from "./components/HelpPage";
 import SignInSide from "./components/login/SignInSide";
 import SignUp from "./components/login/SignUp";
 import RequestServicePage from "./components/RequestServicePage";
+import ServicesPage from "./components/ServicesPage";
 
 function App() {
   return (
@@ -27,14 +27,14 @@ function App() {
           <Nav />
           <Routes>
             <Route exact path="/" Component={HomePage} />
-            <Route exact path="/services" Component={Services} />
+            <Route exact path="/services" Component={ServicesPage} />
             <Route exact path="/schedule-service" Component={ScheduleService} />
             <Route
               exact
               path="/request-service"
               Component={RequestServicePage}
             />
-            <Route exact path="/contact" Component={Contact} />
+            <Route exact path="/contact" Component={ContactPage} />
             <Route exact path="/blog" Component={BlogList} />
             <Route exact path="/blog/:slug" Component={BlogPost} />
             <Route exact path="/login" Component={SignInSide} />
