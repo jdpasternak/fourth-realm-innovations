@@ -5,7 +5,6 @@ import Nav from "./components/Nav";
 import "./i18n";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import ScheduleService from "./components/ScheduleService";
 import ContactPage from "./components/ContactPage";
 import useScrollToTop from "./useScrollToTop";
 import BlogPost from "./components/BlogPost";
@@ -15,8 +14,9 @@ import { HelpOutlineOutlined } from "@mui/icons-material";
 import HelpPage from "./components/HelpPage";
 import SignInSide from "./components/login/SignInSide";
 import SignUp from "./components/login/SignUp";
-import RequestServicePage from "./components/RequestServicePage";
+import RequestServicePage from "./components/requestService/RequestServicePage";
 import ServicesPage from "./components/ServicesPage";
+import ScheduleServicePage from "./components/requestService/ScheduleServicePage";
 
 function App() {
   return (
@@ -28,7 +28,11 @@ function App() {
           <Routes>
             <Route exact path="/" Component={HomePage} />
             <Route exact path="/services" Component={ServicesPage} />
-            <Route exact path="/schedule-service" Component={ScheduleService} />
+            <Route
+              exact
+              path="/schedule-service"
+              Component={ScheduleServicePage}
+            />
             <Route
               exact
               path="/request-service"
