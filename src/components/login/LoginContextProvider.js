@@ -3,12 +3,10 @@ import LoginContext from "./LoginContext";
 
 const LoginContextProvider = ({ children }) => {
   const [formData, setFormData] = useState({
-    loginUsername: "",
-    loginPassword: "",
-    signUpFirstName: "",
-    signUpLastName: "",
-    signUpEmail: "",
-    signUpPassword: "",
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
   });
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
