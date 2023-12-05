@@ -1,7 +1,11 @@
-import { Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 const HelpPage = (props) => {
-  return <Typography variant="h3">Help</Typography>;
+  return (
+    <Container maxWidth={"md"} sx={{ mt: 2 }}>
+      <Typography variant="h3">Help</Typography>
+    </Container>
+  );
 };
 
 export default HelpPage;
