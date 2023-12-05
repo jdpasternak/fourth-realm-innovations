@@ -17,6 +17,7 @@ import SignUp from "./components/login/SignUp";
 import RequestServicePage from "./components/requestService/RequestServicePage";
 import ServicesPage from "./components/ServicesPage";
 import ScheduleServicePage from "./components/requestService/ScheduleServicePage";
+import ForgotPasswordPage from "./components/login/ForgotPasswordPage";
 
 function App() {
   return (
@@ -43,6 +44,11 @@ function App() {
             <Route exact path="/blog/:slug" Component={BlogPost} />
             <Route exact path="/login" Component={SignInSide} />
             <Route exact path="/sign-up" Component={SignUp} />
+            <Route
+              exact
+              path="/forgot-password"
+              Component={ForgotPasswordPage}
+            />
             <Route exact path="/account" Component={Account} />
             <Route exact path="/help" Component={HelpPage} />
           </Routes>
