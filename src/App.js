@@ -5,7 +5,7 @@ import Nav from "./components/Nav";
 import "./i18n";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import ContactPage from "./components/ContactPage";
+import ContactPage from "./components/contact/ContactPage";
 import useScrollToTop from "./useScrollToTop";
 import BlogPost from "./components/blog/BlogPost";
 import BlogList from "./components/blog/BlogList";
