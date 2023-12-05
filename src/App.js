@@ -7,15 +7,15 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import ContactPage from "./components/ContactPage";
 import useScrollToTop from "./useScrollToTop";
-import BlogPost from "./components/BlogPost";
-import BlogList from "./components/BlogList";
+import BlogPost from "./components/blog/BlogPost";
+import BlogList from "./components/blog/BlogList";
 import Account from "./components/Account";
 import { HelpOutlineOutlined } from "@mui/icons-material";
 import HelpPage from "./components/HelpPage";
 import SignInSide from "./components/login/SignInSide";
 import SignUp from "./components/login/SignUp";
 import RequestServicePage from "./components/requestService/RequestServicePage";
-import ServicesPage from "./components/ServicesPage";
+import ServicesPage from "./components/services/ServicesPage";
 import ScheduleServicePage from "./components/requestService/ScheduleServicePage";
 import ForgotPasswordPage from "./components/login/ForgotPasswordPage";
 

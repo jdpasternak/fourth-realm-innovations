@@ -1,21 +1,15 @@
-import React, { useState } from "react";
-import { data } from "../static.js";
+import React from "react";
+import { data } from "../../static.js";
 import {
   Box,
   Card,
   CardContent,
   CardMedia,
-  Collapse,
   Container,
   Grid,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Typography,
 } from "@mui/material";
-import * as Icons from "@mui/icons-material";
+// import * as Icons from "@mui/icons-material";
 
 const ServiceCard = (props) => {
   return (
@@ -45,38 +39,38 @@ const ServiceCard = (props) => {
   );
 };
 
-const ServiceListItem = React.memo(({ service }) => {
-  const Icon = Icons[service.iconName] || Icons.Computer; // Replace DefaultIcon with an actual default icon
-  const [open, setOpen] = useState(false);
+// const ServiceListItem = React.memo(({ service }) => {
+//   const Icon = Icons[service.iconName] || Icons.Computer; // Replace DefaultIcon with an actual default icon
+//   const [open, setOpen] = useState(false);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+//   const handleClick = () => {
+//     setOpen(!open);
+//   };
 
-  return (
-    <>
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <Icon alt={`${service.name} icon`} />
-        </ListItemIcon>
-        <ListItemText>
-          <Typography variant="h5" sx={{}}>
-            {service.name}
-          </Typography>
-        </ListItemText>
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List disablePadding>
-          {service.bullets.map((bullet) => (
-            <ListItem>
-              <ListItemText>{bullet}</ListItemText>
-            </ListItem>
-          ))}
-        </List>
-      </Collapse>
-    </>
-  );
-});
+//   return (
+//     <>
+//       <ListItemButton onClick={handleClick}>
+//         <ListItemIcon>
+//           <Icon alt={`${service.name} icon`} />
+//         </ListItemIcon>
+//         <ListItemText>
+//           <Typography variant="h5" sx={{}}>
+//             {service.name}
+//           </Typography>
+//         </ListItemText>
+//       </ListItemButton>
+//       <Collapse in={open} timeout="auto" unmountOnExit>
+//         <List disablePadding>
+//           {service.bullets.map((bullet) => (
+//             <ListItem>
+//               <ListItemText>{bullet}</ListItemText>
+//             </ListItem>
+//           ))}
+//         </List>
+//       </Collapse>
+//     </>
+//   );
+// });
 
 const ServicesPage = () => {
   const servicesData = data.pages.find((x) => x.name === "Services");
