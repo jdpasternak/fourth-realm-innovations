@@ -1,26 +1,85 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Copyright from "../Copyright";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import withLoginContext from "./withLoginContext";
+import LoginContext from "./LoginContext";
+import FormTextField from "./FormTextField";
+import { Link as RRLink } from "react-router-dom";
+import { LOGIN_URL } from "../../constants";
+import ApplicationContext from "../../Context";
+import { Alert } from "@mui/material";
 
-export default function SignInSide() {
-  const handleSubmit = (event) => {
+const validationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Email Address is invalid")
+    .required("Email Address is required"),
+  password: yup.string().required("Password is required"),
+});
+
+const SignInSide = () => {
+  const { setLoggedIn, setLoggedInEmail } = useContext(ApplicationContext);
+  const { formData, setErrors, setServerError, serverError } =
+    useContext(LoginContext);
+  const [backgroundImage, setBackgroundImage] = useState(
+    `url(/img/SignInBackground${Math.floor(Math.random() * 3 + 1)}.png)`
+  );
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    setErrors([]);
+    setServerError("");
+
+    console.log("formData", formData);
+
+    try {
+      await validationSchema.validate(formData, { abortEarly: false });
+      await submit();
+    } catch (error) {
+      console.error(error);
+      let validationErrors = {};
+      error.inner.forEach((x) => {
+        validationErrors[x.path] = x.message;
+      });
+      setErrors(validationErrors);
+    }
+  };
+
+  const submit = async () => {
+    console.log("Submitting...");
+
+    try {
+      const response = await fetch(LOGIN_URL, {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
+        localStorage.setItem("loggedInEmail", formData.email);
+        setLoggedIn(true);
+        setLoggedInEmail(formData.email);
+        navigate("/");
+      } else {
+        //   console.error("Something went wrong");
+        const { message } = await response.json();
+        //   console.error(message);
+        setServerError(message);
+        window.scrollTo(0, 0);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -33,9 +92,7 @@ export default function SignInSide() {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: `url(/img/SignInBackground${Math.floor(
-            Math.random() * 3 + 1
-          )}.png)`,
+          backgroundImage: backgroundImage,
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"
@@ -61,36 +118,38 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {serverError && <Alert severity="error">{serverError}</Alert>}
           <Box
             component="form"
             noValidate
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
+            <FormTextField
               label="Email Address"
               name="email"
+              type="email"
               autoComplete="email"
               autoFocus
-            />
-            <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
             />
-            <FormControlLabel
+            <FormTextField
+              label="Password"
+              name="password"
+              type="password"
+              autoComplete="password"
+              autoFocus
+              margin="normal"
+              required
+              fullWidth
+            />
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+              name="remember"
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -101,7 +160,9 @@ export default function SignInSide() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link variant="body2">Forgot password?</Link>
+                <Link component={RRLink} to="/forgot-password" variant="body2">
+                  Forgot password?
+                </Link>
               </Grid>
               <Grid item>
                 <Link to="/sign-up" variant="body2">
@@ -116,4 +177,6 @@ export default function SignInSide() {
     </Grid>
     // </ThemeProvider>
   );
-}
+};
+
+export default withLoginContext(SignInSide);
