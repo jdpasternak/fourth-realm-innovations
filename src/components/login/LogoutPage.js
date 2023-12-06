@@ -4,12 +4,14 @@ import { useNavigate } from "react-router";
 import ApplicationContext from "../../Context";
 
 const LogoutPage = (props) => {
-  const { setLoggedIn, setLoggedInEmail } = useContext(ApplicationContext);
+  const { setLoggedIn, setLoggedInEmail, setToken } =
+    useContext(ApplicationContext);
 
   const navigate = useNavigate();
   useEffect(() => {
     setLoggedIn(false);
-    setLoggedIn("");
+    setLoggedInEmail(null);
+    setToken(null);
     localStorage.removeItem("loggedInEmail");
     localStorage.removeItem("token");
     setTimeout(() => {
