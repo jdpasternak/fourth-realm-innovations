@@ -17,6 +17,7 @@ import { Link as RRLink } from "react-router-dom";
 import { LOGIN_URL } from "../../constants";
 import ApplicationContext from "../../Context";
 import { Alert } from "@mui/material";
+import LoadingIcon from "../LoadingIcon";
 
 const validationSchema = yup.object().shape({
   email: yup
@@ -33,10 +34,12 @@ const SignInSide = () => {
   const [backgroundImage, setBackgroundImage] = useState(
     `url(/img/SignInBackground${Math.floor(Math.random() * 3 + 1)}.png)`
   );
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     setErrors([]);
     setServerError("");
 
@@ -52,6 +55,7 @@ const SignInSide = () => {
         validationErrors[x.path] = x.message;
       });
       setErrors(validationErrors);
+      setLoading(false);
     }
   };
 
@@ -80,6 +84,7 @@ const SignInSide = () => {
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
 
   return (
@@ -156,7 +161,7 @@ const SignInSide = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              {isLoading ? <LoadingIcon /> : "Sign In"}
             </Button>
             <Grid container>
               <Grid item xs>
