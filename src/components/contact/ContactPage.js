@@ -2,6 +2,8 @@ import {
   Alert,
   Box,
   Button,
+  Card,
+  CardContent,
   Container,
   Grid,
   TextField,
@@ -10,6 +12,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import ApplicationContext from "../../Context";
 import validationSchema from "./validationSchema";
+import { Email, Phone } from "@mui/icons-material";
 
 /*
   [x] Implement yup
@@ -21,7 +24,7 @@ const ContactPage = (props) => {
     setSharedData,
     contactPageData: {
       isContactPageAlertHidden,
-      setContactPageAlertHidden, 
+      setContactPageAlertHidden,
       isContactPageLoading,
       setContactPageLoading,
       isMessageSent,
@@ -115,6 +118,67 @@ const ContactPage = (props) => {
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" sx={{ mb: 2 }}>
           Contact Us
+        </Typography>
+        <Typography variant="body1" sx={{ mb: 2 }}></Typography>
+      </Box>
+      <Box sx={{ my: 4 }}>
+        <Card sx={{ display: "flex", justifyContent: "center" }}>
+          <CardContent
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              flexDirection: "column",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                my: 1,
+                width: "100%",
+              }}
+            >
+              <Email sx={{ mr: 2 }} />
+              <Typography
+                component="a"
+                href="mailto:jake@fourthrealminnovations.com"
+                sx={{ textDecoration: "none" }}
+              >
+                jake@fourthrealminnovations.com
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
+              <Phone sx={{ mr: 2 }} />
+              <Typography
+                component="a"
+                href="tel:+18082163534"
+                sx={{ textDecoration: "none" }}
+              >
+                (808) 216-3534
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
+              <Box
+                component={"img"}
+                src="/img/rumble-full-logo-v4.svg"
+                sx={{ mr: 2, ml: -0.75 }}
+              ></Box>
+              <Typography
+                component="a"
+                href="https://rumble.com/c/JakesDevLab"
+                target="_blank"
+                sx={{ textDecoration: "none" }}
+              >
+                Jake's DevLab
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h4" sx={{ mb: 2 }}>
+          Send Us a Message
         </Typography>
         <Typography variant="body1" sx={{ mb: 2 }}></Typography>
       </Box>
