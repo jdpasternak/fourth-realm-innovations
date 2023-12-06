@@ -9,13 +9,17 @@ const ApplicationContextProvider = ({ children }) => {
   const [isContactFormHidden, setContactFormHidden] = useState(false);
   const [loggedInEmail, setLoggedInEmail] = useState();
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [token, setToken] = useState();
 
   useEffect(() => {
     setLoggedIn(localStorage.getItem("token") != null);
     setLoggedInEmail(localStorage.getItem("loggedInEmail"));
+    setToken(localStorage.getItem("token"));
   }, []);
 
   const contextValue = {
+    token,
+    setToken,
     isLoggedIn,
     setLoggedIn,
     loggedInEmail,
