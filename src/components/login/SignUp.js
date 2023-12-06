@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,17 +10,73 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Copyright from "../Copyright";
+import LoadingIcon from "../LoadingIcon";
+import LoginContext from "./LoginContext";
+import validationSchema from "./validationSchema";
+import withLoginContext from "./withLoginContext";
+import FormTextField from "./FormTextField";
+import { Alert } from "@mui/material";
+import ApplicationContext from "../../Context";
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
+const SignUp = (props) => {
+  const [isLoading, setLoading] = useState(false);
+  const { formData, setFormData, setErrors, serverError, setServerError } =
+    useContext(LoginContext);
+  const { setToken, setLoggedIn, setLoggedInEmail } =
+    useContext(ApplicationContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    console.log("event", event);
+    console.log("formData", formData);
+    setErrors([]);
+    setServerError(null);
+    setLoading(true);
+
+    try {
+      await validationSchema.validate(formData, { abortEarly: false });
+      await submit();
+    } catch (error) {
+      console.error(error);
+      let validationErrors = {};
+      error.inner.forEach((err) => (validationErrors[err.path] = err.message));
+      console.log("validationErrors", validationErrors);
+      setErrors(validationErrors);
+    }
+
+    setLoading(false);
+  };
+
+  const submit = async () => {
+    try {
+      const response = await fetch(
+        "https://s47hgo1zcb.execute-api.us-east-1.amazonaws.com/sign-up",
+        {
+          method: "POST",
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (response.ok) {
+        const { token } = await response.json();
+        console.log(token);
+        setToken(token);
+        setLoggedIn(true);
+        setLoggedInEmail(formData.email);
+        localStorage.setItem("token", token);
+        localStorage.setItem("isLoggedIn", true);
+        navigate("/");
+      } else {
+        const { message } = await response.json();
+        console.log("Something went wrong...", message);
+        setServerError(message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -40,54 +96,67 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        {serverError && (
+          <Alert sx={{ mt: 2, width: "100%" }} severity="error">
+            {serverError}
+          </Alert>
+        )}
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
+              <FormTextField
                 label="First Name"
+                name="firstName"
+                type="text"
+                autoComplete="given-name"
+                required
                 autoFocus
+                fullWidth
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
+              <FormTextField
                 label="Last Name"
                 name="lastName"
+                type="text"
                 autoComplete="family-name"
+                required
+                autoFocus
+                fullWidth
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="email"
+              <FormTextField
                 label="Email Address"
                 name="email"
+                type="email"
                 autoComplete="email"
+                required
+                autoFocus
+                fullWidth
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
+              <FormTextField
                 label="Password"
+                name="password"
                 type="password"
-                id="password"
                 autoComplete="new-password"
+                required
+                autoFocus
+                fullWidth
               />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
+                onChange={(event) =>
+                  setFormData({
+                    ...formData,
+                    allowEmails: event.target.checked,
+                  })
+                }
               />
             </Grid>
           </Grid>
@@ -97,7 +166,7 @@ export default function SignUp() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            {isLoading ? <LoadingIcon /> : `Sign Up`}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
@@ -111,4 +180,6 @@ export default function SignUp() {
       <Copyright sx={{ mt: 5 }} />
     </Container>
   );
-}
+};
+
+export default withLoginContext(SignUp);
