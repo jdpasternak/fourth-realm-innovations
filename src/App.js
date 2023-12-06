@@ -18,6 +18,8 @@ import RequestServicePage from "./components/requestService/RequestServicePage";
 import ServicesPage from "./components/services/ServicesPage";
 import ScheduleServicePage from "./components/requestService/ScheduleServicePage";
 import ForgotPasswordPage from "./components/login/ForgotPasswordPage";
+import CustomAppBar from "./components/CustomAppBar";
+import LogoutPage from "./components/login/LogoutPage";
 
 function App() {
   return (
@@ -25,7 +27,7 @@ function App() {
       <Router>
         <ScrollToTop />
         <Box>
-          <Nav />
+          <CustomAppBar />
           <Routes>
             <Route exact path="/" Component={HomePage} />
             <Route exact path="/services" Component={ServicesPage} />
@@ -51,6 +53,7 @@ function App() {
             />
             <Route exact path="/account" Component={Account} />
             <Route exact path="/help" Component={HelpPage} />
+            <Route exact path="/logout" Component={LogoutPage} />
           </Routes>
           <IconButton
             LinkComponent={Link}
