@@ -2,6 +2,8 @@ import { Container, Typography } from "@mui/material";
 import { marked } from "marked";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ShareBar from "./ShareBar";
+import LoadingIcon from "../LoadingIcon";
 
 const useBlogContent = (slug) => {
   const [blogContent, setBlogContent] = useState();
@@ -15,8 +17,8 @@ const useBlogContent = (slug) => {
       );
       console.log("response", response);
       const data = await response.json();
-      console.log(data);
-      setBlogContent(data);
+      console.log(data.trim());
+      setBlogContent(data.trim());
     };
     fetchData();
   }, []);
@@ -28,17 +30,16 @@ const BlogPost = () => {
   const blogContent = useBlogContent(slug);
 
   return (
-    <Container>
-      <h1>Blog Post</h1>
-      <p>Now showing post: {slug}</p>
+    <Container maxWidth="md">
+      <ShareBar slug={slug} />
       {blogContent ? (
         <div
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(marked.parse(blogContent)),
+            __html: marked.parse(blogContent),
           }}
         />
       ) : (
-        <Typography>Loading...</Typography>
+        <LoadingIcon />
       )}
     </Container>
   );

@@ -1,6 +1,7 @@
 import { Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import BlogPostCard from "./BlogPostCard";
+import LoadingIcon from "../LoadingIcon";
 
 const useBlogList = () => {
   const [blogList, setBlogList] = useState([]);
@@ -30,21 +31,23 @@ const BlogList = (props) => {
   const Items = useBlogList();
 
   return (
-    <Container>
-      <h1>Blog List</h1>
-      <ul>
-        {Items.length > 0 ? (
-          Items?.map((post) => (
-            <li key={post.slug}>
-              <Link to={`/blog/${post.slug}`}>{post.title}</Link>
-            </li>
-          ))
-        ) : (
-          <Typography>Loading...</Typography>
-        )}
-      </ul>
+    <Container maxWidth="md">
+      <Typography variant="h1" sx={{ mb: 2 }}>
+        Blog
+      </Typography>
+      {Items.length > 0 ? (
+        Items?.map((post) => <BlogPostCard post={post} />)
+      ) : (
+        <LoadingIcon />
+      )}
     </Container>
   );
 };
 
 export default BlogList;
+
+/*
+<li key={post.slug}>
+              <Link to={`/blog/${post.slug}`}>{post.title}</Link>
+            </li> 
+*/
