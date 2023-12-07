@@ -12,7 +12,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import ApplicationContext from "../../Context";
 import validationSchema from "./validationSchema";
-import { Email, Phone } from "@mui/icons-material";
+import { Email, Facebook, LinkedIn, Phone, Twitter } from "@mui/icons-material";
 
 /*
   [x] Implement yup
@@ -163,7 +163,7 @@ const ContactPage = (props) => {
                 component={"img"}
                 src="/img/rumble-full-logo-v4.svg"
                 sx={{ mr: 2, ml: -0.75 }}
-              ></Box>
+              />
               <Typography
                 component="a"
                 href="https://rumble.com/c/JakesDevLab"
@@ -172,6 +172,39 @@ const ContactPage = (props) => {
               >
                 Jake's DevLab
               </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                mt: 1,
+                alignSelf: "center",
+              }}
+            >
+              <Button
+                sx={{ minWidth: 0 }}
+                component="a"
+                href="https://www.facebook.com/profile.php?id=61554395008362"
+                target="_blank"
+              >
+                <Facebook />
+              </Button>
+              <Button
+                sx={{ minWidth: 0 }}
+                component="a"
+                href="https://twitter.com/FourthRealmTech"
+                target="_blank"
+              >
+                <Twitter />
+              </Button>
+              <Button
+                sx={{ minWidth: 0 }}
+                component="a"
+                href="https://www.linkedin.com/company/fourth-realm-innovations/about"
+                target="_blank"
+              >
+                <LinkedIn />
+              </Button>
             </Box>
           </CardContent>
         </Card>
