@@ -32,7 +32,7 @@ const FormTextField = (props) => {
       type={type}
       name={name}
       value={formData?.[name]}
-      onChange={({ target: { value } }) => handleChange(value, name)}
+      onChange={handleChange}
       error={errors?.[name] != null}
       helperText={errors?.[name]}
       fullWidth
