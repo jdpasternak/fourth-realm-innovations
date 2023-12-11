@@ -18,6 +18,7 @@ import DatePicker from "./DatePicker.js";
 import AppointmentsButtonGroup from "./AppointmentsButtonGroup.js";
 import validationSchema from "./validationSchema.js";
 import SectionTitle from "./SectionTitle.js";
+import ThankYouModal from "./ThankYouModal.js";
 
 /* TODO
 
@@ -28,27 +29,27 @@ import SectionTitle from "./SectionTitle.js";
   [] Check that form is valid before opening review modal
   [] Configure backend flow
     [] Lambda function receives form details
-    [] Creates a records in a DDB table
+    [] Creates a record in a DDB table
       [] Generates random ID for appointment request
-    [] Sends email to jdp.pasternak@gmail.com with details
+    [] Sends email to jake@fourthrealminnovations.com with details
     [] Sends email to user requesting appointment, includes request ID
 
 */
 
 const RequestServicePage = (props) => {
-  const { formData, setFormData, setValidationErrors } = useContext(
-    RequestServiceContext
-  );
+  const { formData, setValidationErrors } = useContext(RequestServiceContext);
   const [displayModal, setDisplayModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [displayHelpModal, setDisplayHelpModal] = useState(false);
+  const [displayThankYouModal, setDisplayThankYouModal] = useState(false);
+  const [serviceRequestId, setServiceRequestId] = useState("");
 
   const handleReview = async () => {
-    // TODO Check if data is valid first, then show modal
     try {
       await validationSchema.validate(formData, {
         abortEarly: false,
       });
+      setValidationErrors([]);
       setDisplayModal(true);
     } catch (error) {
       let validationErrors = {};
@@ -65,9 +66,40 @@ const RequestServicePage = (props) => {
       ...formData,
       appointmentTime: formData.appointmentTime.format(),
     });
-    setInterval(() => {
-      setSubmitting(false);
-    }, 3000);
+    submit();
+  };
+
+  const submit = async () => {
+    const body = JSON.stringify({
+      ...formData,
+      appointmentTime: formData.appointmentTime.format(),
+    });
+    console.log("body:", body);
+    const response = await fetch(
+      "https://s47hgo1zcb.execute-api.us-east-1.amazonaws.com/request-service",
+      {
+        method: "POST",
+        body: body,
+      }
+    );
+
+    if (response.ok) {
+      console.log("Success");
+      // Show a message or somehow alert the customer of the successful transaction
+      const data = await response.json();
+      console.log("response data:", data);
+      setServiceRequestId(data.serviceRequestId);
+      setDisplayThankYouModal(true);
+      setDisplayModal(false);
+    } else {
+      console.log(
+        "Something went wrong:",
+        response.status,
+        await response.json()
+      );
+    }
+
+    setSubmitting(false);
   };
 
   return (
@@ -86,13 +118,18 @@ const RequestServicePage = (props) => {
           <Grid container spacing={2}>
             <SectionTitle>Basic Information</SectionTitle>
             <Grid item xs={12} lg={12}>
-              <FormTextField label="Name" name="name" type="text" />
+              <FormTextField label="Name" name="name" type="text" required />
             </Grid>
             <Grid item xs={12} lg={12}>
-              <FormTextField label="Email" name="email" type="email" />
+              <FormTextField label="Email" name="email" type="email" required />
             </Grid>
             <Grid item xs={12} lg={12}>
-              <FormTextField label="Phone Number" name="phone" type="tel" />
+              <FormTextField
+                label="Phone Number"
+                name="phone"
+                type="tel"
+                required
+              />
             </Grid>
             <Grid item xs={12}>
               <Typography variant={"h5"}>Service Address</Typography>
@@ -102,6 +139,7 @@ const RequestServicePage = (props) => {
                 label="Address Line 1"
                 name="address1"
                 type="text"
+                required
               />
             </Grid>
             <Grid item xs={12} lg={12}>
@@ -112,13 +150,13 @@ const RequestServicePage = (props) => {
               />
             </Grid>
             <Grid item xs={12} lg={4}>
-              <FormTextField label="City" name="city" type="text" />
+              <FormTextField label="City" name="city" type="text" required />
             </Grid>
             <Grid item xs={12} lg={4}>
-              <FormTextField label="State" name="state" type="text" />
+              <FormTextField label="State" name="state" type="text" required />
             </Grid>
             <Grid item xs={12} lg={4}>
-              <FormTextField label="Zip Code" name="zip" type="text" />
+              <FormTextField label="Zip Code" name="zip" type="text" required />
             </Grid>
             <Grid item xs={12}>
               <Typography variant={"h5"}>Service Details</Typography>
@@ -165,6 +203,11 @@ const RequestServicePage = (props) => {
       <RequestServicePageInstructionsModal
         open={displayHelpModal}
         onClose={() => setDisplayHelpModal(false)}
+      />
+      <ThankYouModal
+        serviceRequestId={serviceRequestId}
+        displayThankYouModal={displayThankYouModal}
+        setDisplayThankYouModal={setDisplayThankYouModal}
       />
     </Container>
   );
