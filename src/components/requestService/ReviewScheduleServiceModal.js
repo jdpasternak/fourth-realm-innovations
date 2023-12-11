@@ -9,6 +9,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
+import LoadingIcon from "../LoadingIcon";
 
 const ReviewScheduleService = (props) => {
   return (
@@ -90,11 +91,16 @@ const ReviewScheduleService = (props) => {
           color="error"
           onClick={props.onClose}
           disabled={props.submitting}
+          fullWidth
         >
           Cancel
         </Button>
-        <Button onClick={props.handleSubmit} disabled={props.submitting}>
-          {props.submitting ? "Requesting..." : "Request Service"}
+        <Button
+          onClick={props.handleSubmit}
+          disabled={props.submitting}
+          fullWidth
+        >
+          {props.submitting ? <LoadingIcon /> : "Submit Request"}
         </Button>
       </DialogActions>
     </Dialog>
