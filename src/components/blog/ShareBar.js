@@ -10,7 +10,7 @@ const ShareBar = (props) => {
           onClick={() => {
             window.open(
               `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                `https://www.fourthrealminnovations.com/blog/${props.slug}`
+                `https://www.fourthrealminnovations.com/blog/${props.slug.trim()}`
               )}`
             );
           }}
@@ -22,8 +22,7 @@ const ShareBar = (props) => {
           onClick={() => {
             window.open(
               `https://twitter.com/intent/tweet?text=Check+out+this+article+by+@FourthRealmTech&url=${encodeURIComponent(
-                `https://www.fourthrealminnovations.com/blog/
-                  ${props.slug}`
+                `https://www.fourthrealminnovations.com/blog/${props.slug.trim()}`
               )}`
             );
           }}
@@ -35,8 +34,7 @@ const ShareBar = (props) => {
           onClick={() => {
             window.open(
               `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-                `https://www.fourthrealminnovations.com/blog/
-                  ${props.slug}`
+                `https://www.fourthrealminnovations.com/blog/${props.slug}`
               )}`
             );
           }}
