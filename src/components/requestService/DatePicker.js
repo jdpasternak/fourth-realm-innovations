@@ -23,7 +23,6 @@ const DatePicker = (props) => {
         value={formData?.browseDate}
         onChange={handleChange}
         disablePast
-        error
       />
     </LocalizationProvider>
   );
