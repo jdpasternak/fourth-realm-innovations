@@ -1,16 +1,16 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { useContext } from "react";
-import ApplicationContext from "../Context";
+import ApplicationContext from "../../Context";
+import VerticalTabs from "./VerticalTabs";
 
 const Account = (props) => {
   const { loggedInEmail } = useContext(ApplicationContext);
   return (
-    <Box>
+    <Container maxWidth="md">
       <Typography variant="h1">Account</Typography>
       <Typography>Logged-In User: {loggedInEmail}</Typography>
-      <TextField label="First Name" name="firstName" />
-      <TextField label="Last Name" name="lastName" />
-    </Box>
+      <VerticalTabs />
+    </Container>
   );
 };
 
