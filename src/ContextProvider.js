@@ -10,6 +10,7 @@ const ApplicationContextProvider = ({ children }) => {
   const [loggedInEmail, setLoggedInEmail] = useState();
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [token, setToken] = useState();
+  const [displayHelpModal, setDisplayHelpModal] = useState(false);
 
   useEffect(() => {
     setLoggedIn(localStorage.getItem("token") != null);
@@ -18,6 +19,8 @@ const ApplicationContextProvider = ({ children }) => {
   }, []);
 
   const contextValue = {
+    displayHelpModal,
+    setDisplayHelpModal,
     token,
     setToken,
     isLoggedIn,
