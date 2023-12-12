@@ -20,22 +20,6 @@ import validationSchema from "./validationSchema.js";
 import SectionTitle from "./SectionTitle.js";
 import ThankYouModal from "./ThankYouModal.js";
 
-/* TODO
-
-  [] Refactor components to seperate files
-  [] Scheduling function
-    [] Dumb-scheduler to has hour blocks from 9-5 daily for the next 30 days; calendar does not display for other dates
-  [] Implement form validation
-  [] Check that form is valid before opening review modal
-  [] Configure backend flow
-    [] Lambda function receives form details
-    [] Creates a record in a DDB table
-      [] Generates random ID for appointment request
-    [] Sends email to jake@fourthrealminnovations.com with details
-    [] Sends email to user requesting appointment, includes request ID
-
-*/
-
 const RequestServicePage = (props) => {
   const { formData, setValidationErrors } = useContext(RequestServiceContext);
   const [displayModal, setDisplayModal] = useState(false);
