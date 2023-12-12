@@ -1,16 +1,14 @@
-import { Box, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import "./App.css";
 import ApplicationContextProvider from "./ContextProvider";
-import Nav from "./components/Nav";
 import "./i18n";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import HomePage from "./components/HomePage";
 import ContactPage from "./components/contact/ContactPage";
 import useScrollToTop from "./useScrollToTop";
 import BlogPost from "./components/blog/BlogPost";
 import BlogList from "./components/blog/BlogList";
 import Account from "./components/Account";
-import { HelpOutlineOutlined } from "@mui/icons-material";
 import HelpPage from "./components/HelpPage";
 import SignInSide from "./components/login/SignInSide";
 import SignUp from "./components/login/SignUp";
@@ -20,6 +18,8 @@ import ScheduleServicePage from "./components/requestService/ScheduleServicePage
 import ForgotPasswordPage from "./components/login/ForgotPasswordPage";
 import CustomAppBar from "./components/CustomAppBar";
 import LogoutPage from "./components/login/LogoutPage";
+import HelpModal from "./components/HelpModal";
+import HelpButton from "./components/HelpButton";
 
 function App() {
   return (
@@ -55,15 +55,10 @@ function App() {
             <Route exact path="/help" Component={HelpPage} />
             <Route exact path="/logout" Component={LogoutPage} />
           </Routes>
-          <IconButton
-            LinkComponent={Link}
-            to="/help"
-            sx={{ position: "fixed", bottom: 0, right: 0, mr: 1, mb: 1 }}
-          >
-            <HelpOutlineOutlined />
-          </IconButton>
+          <HelpButton />
         </Box>
       </Router>
+      <HelpModal />
     </ApplicationContextProvider>
   );
 }
